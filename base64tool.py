@@ -116,6 +116,75 @@ def b64chrlist_to_b64str(base64_char_list):
 
     return base64_str    
 
+def b64str_to_b64numlst(base64_alphabet, base64_str):
+
+    base64_char_list = list(base64_str)
+    b64_ord_list = []
+    for char in base64_char_list:
+        if char != '=':
+            b64_ord_no = base64_alphabet.index(char)
+            b64_ord_list.append(b64_ord_no)
+        else:
+            b64_ord_list.append(char)
+
+    return b64_ord_list
+
+def b64numlst_to_bit6list(b64_ord_list):
+
+    bit6_list = []
+    for num in b64_ord_list:
+        if num != '=':
+            bit6_num = "{0:b}".format(int(num)).rjust(6, '0')
+        else:
+            bit6_num = 6 * '0'
+        bit6_list.append(bit6_num)
+
+    return bit6_list
+
+def bit6lst_to_bit6str(bit6_list):
+
+    bit6_str = ''.join(bit6_list)
+
+    return bit6_str    
+
+def bit6str_to_bit8lst(bit6_str):
+
+    bit8_list = [bit6_str[i:i+8] for i in range(0, len(bit6_str), 8)]
+
+    return bit8_list
+
+def remove_padding(bit8_list):
+
+    while bit8_list[-1] == 8 * '0':
+
+        bit8_list.pop()
+
+    return bit8_list    
+
+def bit8lst_to_numlst(bit8_list):
+
+    ord_list = []
+    for item in bit8_list:
+        ord_no = int(item, 2)
+        ord_list.append(ord_no)
+
+    return ord_list    
+
+def numlst_to_asciilst(ord_list):
+
+    ascii_list = []
+    for num in ord_list:
+        ascii_char = chr(num)
+        ascii_list.append(ascii_char)
+
+    return ascii_list    
+
+def asciilst_to_asciistr(ascii_list):
+
+    ascii_str = ''.join(ascii_list)
+
+    return ascii_str
+
 def encode(ascii_text):
 
     # Create base64 alphabet
@@ -161,6 +230,46 @@ def encode(ascii_text):
     
     return base64_str
 
+def decode(base64_str):
+
+    # Create base64 alphabet
+
+    base64_alphabet = generate_base64_alphabet()
+
+    # Transform base64 string in corresponding base64 ord list
+
+    b64_ord_list = b64str_to_b64numlst(base64_alphabet, base64_str)    
+
+    # Transform base64 ord list in 6-bit list
+
+    bit6_list = b64numlst_to_bit6list(b64_ord_list)    
+
+    # Create full binary string from 6-bit list
+
+    bit6_str = bit6lst_to_bit6str(bit6_list)
+
+    # Create 8-bit list from binary string
+
+    bit8_list = bit6str_to_bit8lst(bit6_str)
+
+    # Remove padding
+
+    bit8_list = remove_padding(bit8_list)
+
+    # Create ord list from 8-bit list
+
+    ord_list = bit8lst_to_numlst(bit8_list)
+
+    # Create ascii list from ord list
+
+    ascii_list = numlst_to_asciilst(ord_list)
+
+    # Create final ascii string
+
+    ascii_str = asciilst_to_asciistr(ascii_list)
+
+    return ascii_str
+
 def encode_text():
 
     pass
@@ -190,8 +299,10 @@ if __name__ == '__main__':
     #get_arguments()
     #text = get_input_text()
     #print("Input text:", text)
-    num_list = encode("a")
-    print(num_list)
+    ##num_list = encode("abcdef") # a - YQ== , ab - YWI= , abc - YWJj , abcd - YWJjZA== , abcde - YWJjZGU= , abcdef - YWJjZGVm
+    ##print(num_list)
+    b64_num_list = decode("YWJjZA==")
+    print(b64_num_list)
     #print(len(num_list))
     #for item in num_list:
     #    print("Number", item, "is type", type(item))
