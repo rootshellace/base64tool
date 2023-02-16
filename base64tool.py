@@ -33,6 +33,21 @@ def get_input_text():
     input_text = input("Please type the text you want to encode/decode: ")
     return input_text
 
+def get_file_content(user_file):
+
+    file = open(user_file, mode='r')
+    user_string = ''
+
+    while True:
+        data_chunk = file.read(1024)
+        user_string += data_chunk
+        if not data_chunk:
+            break
+
+    file.close()
+
+    return user_string
+
 def generate_base64_alphabet():
 
     base64_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
@@ -272,37 +287,48 @@ def decode(base64_str):
 
 def encode_text():
 
-    pass
-    # get user input text
-    # encode text
+    # Get user input text
+    ascii_string = get_input_text()
+    
+    # Encode text
+    b64_string = encode(ascii_string)
+
+    return b64_string
 
 def decode_text():
 
-    pass
-    # get user input text
-    # decode text
+    # Get user input text
+    b64_string = get_input_text()
 
-def encode_file():
+    # Decode text
+    ascii_string = decode(b64_string)
 
-    pass
-    # read file and get the text
-    # encode text
+    return ascii_string
 
-def decode_file():
+def encode_file(user_file):
 
-    pass
-    # read file and get the text
-    # decode text
+    # Read file and get the text
+    user_string = get_file_content(user_file)
+
+    # Encode text
+    b64_string = encode(user_string)
+
+    return b64_string
+
+def decode_file(user_file):
+
+    # Read file and get the text
+    user_string = get_file_content(user_file)
+
+    # Decode text
+    ascii_string = decode(user_string)
+
+    return ascii_string
 
 
 if __name__ == '__main__':
     #get_arguments()
-    #text = get_input_text()
-    #print("Input text:", text)
-    ##num_list = encode("abcdef") # a - YQ== , ab - YWI= , abc - YWJj , abcd - YWJjZA== , abcde - YWJjZGU= , abcdef - YWJjZGVm
-    ##print(num_list)
-    b64_num_list = decode("YWJjZA==")
-    print(b64_num_list)
-    #print(len(num_list))
-    #for item in num_list:
-    #    print("Number", item, "is type", type(item))
+    
+    b64_string = encode_file("my_file.txt")
+    print(b64_string)
+    
