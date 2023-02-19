@@ -185,11 +185,15 @@ def b64str_to_b64numlst(base64_alphabet, base64_str):
         base64_char_list = list(base64_str)
         b64_ord_list = []
         for char in base64_char_list:
-            if char != '=':
+            if char != '=' and char in base64_alphabet:
                 b64_ord_no = base64_alphabet.index(char)
                 b64_ord_list.append(b64_ord_no)
-            else:
+            elif char == '=':
                 b64_ord_list.append(char)
+            else:
+                print("BASE64 string contains non BASE64 char!")
+                print("Char -", char)
+                sys.exit("Exit!")
 
         return b64_ord_list
     except Exception as exc:
