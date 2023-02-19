@@ -7,7 +7,43 @@ import sys
 def get_arguments():
 
     try:
-        parser = argparse.ArgumentParser(description="base64tool by rootshellace", 
+
+        parser_description = '''
+        ***base64tool by rootshellace***
+
+        This is a tool used to encode text to base64 or decode
+        base64 to text.
+
+        Since there are already default system functions for this,
+        the purpose of this tool is not to reinvent the wheel, but
+        to show exactly how this algorithm works.
+            
+        There are 2 group of arguments which mutually exclude.
+        One of them is the type of encoding and the other one
+        is the type of input.
+
+        You need to pass 2 arguments, the type of encoding and 
+        the type of input.
+
+        For the type of encoding, you have 2 options: either
+        encode or decode. You can't add both of them in the 
+        same time, you will get an error.
+
+        If you want to choose the encode option, add -e/--encode.
+        It does not require a value. In case you want to decode,
+        just add -d/--decode. Like previously, no value is required.
+
+        The type of input can be either text from keyboard or
+        a specific text file. You cannot select both in the same time.
+
+        To pass text as input, add -t/--text. It does not require a
+        value. Otherwise, add -f/--file. In this case, you must provide
+        the path to the file you want to use as input for encoding or
+        decoding. You must have read permissions for that file, if you
+        do not have them, you will get a [Permission Denied] error.
+        '''
+
+        parser = argparse.ArgumentParser(description=parser_description, 
                                         formatter_class=argparse.RawDescriptionHelpFormatter)
 
         code_group_args = parser.add_mutually_exclusive_group(required=True)
