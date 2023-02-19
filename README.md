@@ -7,7 +7,7 @@ This is a tool used to encode text to base64 or decode base64 to text.
 There are 2 arguments required by this script, both mandatory:
 
 - Type of encoding (encode/decode)
-- Type of input
+- Type of input (text/file)
 
 If you run it without any arguments (or only one), it will show an error message saying which of them is missing.
 
@@ -74,15 +74,15 @@ optional arguments:
 
 * **Type of encoding**
 
-There are 2 possible options, either encode or decode. This argument is mandatory and you do not need to pass any value to it.
+There are 2 possible options, either encode or decode. This argument is mandatory and you do not need to pass any value to it. If you choose encode, add *-e/--encode*. If you want to decode, add *-d/--decode*.
 
 * **Type of input**
 
-You can choose to pass either text or a file as input. In case you choose to pass text, it will be required from keyboard. No value need to be passed to -t/--text argument. If you choose to pass a file as input, after -f/--file argument you must add the the path for it. This one must be valid and you need to have read permissions on the file.
+You can choose to pass either text or a file as input. This argument is also mandatory. In case you choose to pass text, it will be required from keyboard. No value need to be passed to *-t/--text* argument. If you choose to pass a file as input, after *-f/--file* argument you must add the the path for it. This one must be valid and you need to have read permissions on the file.
 
 ## Prerequisites
 
-First, you must have Python 3 installed. I have tested the tool on Python 3.9.2 version. 
+You must have Python 3 installed. I have tested the tool on Python 3.9.2 version. 
 I have also used 2 modules : *argparse* and *sys*.
 
 Both of them are default Python modules (or they should be). If any of them is missing, use pip3 to install them, just by running this command:
